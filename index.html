@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3T44EYRNNC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3T44EYRNNC');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Chameleon: Predictable Latency and High Utilization with Queue-Aware and Adaptive Source Routing - CoNEXT'20">
+    <meta name="author" content="Amaury Van Bemten">
+
+    <link rel="icon" href="images/favicon.ico">
+
+    <title>Chameleon: Predictable Latency and High Utilization with Queue-Aware and Adaptive Source Routing</title>
+
+    <link rel="canonical" href="https://chameleon.lkn.ei.tum.de">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4"><a href="index.html">Chameleon: Predictable Latency and High Utilization<br>with Queue-Aware and Adaptive Source Routing</a></h1>
+</div>
+
+<div class="container">
+    <div class="text-center">
+        <p class="lead">
+            <em>Chameleon</em> is a solution for cloud networks to provide both predictable latency and high utilization, typically two conflicting goals, especially in multi-tenant datacenters.
+        </p>
+
+        <p class="lead">
+            Objective: <span class="font-weight-bold text-success">predictable latency</span> and <span class="font-weight-bold text-success">high utilization</span></span>
+        </p>
+
+        <div class="row align-items-center mb-3">
+            <div class="col-sm">
+                <img class="plot" src="images/utilization.png" />
+            </div>
+            <div class="col-sm-8">
+                <p>
+Compared to the SoA Silo and QJump systems, Chameleon is able to admit significantly more flows, and hence increase network utilization and operator revenue, without sacrificing performance guarantees.
+                </p>
+                <p class="lead">
+                    We show in testbed measurements that the delay guarantees provided by Chameleon are indeed satisfied.
+                </p>
+            </div>
+        </div>
+
+        <p>
+            <em>Chameleon</em> employs fine-granular routing to leverage path diversity and select priority queues, and dynamically reevaluates routing decisions, performing adjustments while maintaining network calculus invariants to ensure strict latency guarantees are provided and preserved.
+        </p>
+
+        <p class="lead">
+            Pillars of <em>Chameleon</em>: <span class="font-weight-bold text-info">priority queuing</span>, <span class="font-weight-bold text-info">source routing</span>, and <span class="font-weight-bold text-info">reconfigurations</span>
+        </p>
+
+        <a href="paper.html" role="button" class="btn btn-sm btn-info">About the paper</a>
+    </div>
+
+    <hr>
+
+    <h2><i class="fab fa-github"></i> Get the Source Code</h2>
+    <p class="lead">
+        Chameleon relies on a central network controller for computing delays and paths in the network and on a custom VM hypervisor virtual switch for tagging and shaping traffic at the edge.
+    </p>
+
+    <p>
+        All the source code and documentation is available on GitHub: the <a href="https://github.com/AmoVanB/chameleon-controller"><i class="fab fa-github"></i> Java network controller</a> and the <a href="https://github.com/AmoVanB/chameleon-end-host"><i class="fab fa-github"></i> virtual switch</a>.
+    </p>
+
+    <p class="text-warning text-center">
+        A problem understanding the code or running it? Not finding the information you want?
+        <br>
+        <i class="fas fa-exclamation-circle"></i> Do not hesitate to <a href="paper.html">contact us</a>. <i class="fas fa-exclamation-circle"></i>
+    </p>
+
+    <hr>
+
+    <div class="row align-items-center mb-3">
+        <div class="col-sm">
+            <img class="plot" src="images/architecture.png" />
+        </div>
+        <div class="col-sm-5">
+            <p>
+                Chameleon relies on <span class="text-info">source routing</span> defining both physical links <em>and</em> queues where packets should be forwarded.
+                Packets sent by VMs are captured in a virtual switch that is responsible for <span class="text-info">tagging</span> (e.g., with VLAN tags) and shaping flows.
+            </p>
+        </div>
+    </div>
+
+            <p class="lead">
+                The network controller is the entity responsible for, based on a user request for a new flow, computing a path in the network that satisfies the end-to-end delay requirement of the flow.
+                To this end, the controller updates the tagging rules in the virtual switch of the source VM.
+            </p>
+
+    <div class="row align-items-center mb-3">
+        <div class="col-sm-7">
+            <p>
+                The VMs on a server run in QEMU with KVM.
+                The virtual switch of the VMs hypervisor is implemented as a <span class="text-info">DPDK application</span> running in a privileged <i class="fab fa-docker"></i> docker container.
+                The VMs and the DPDK application are connected through virtio using a vhost-net/virtio-net para-virtualization architecture.
+            </p>
+        </div>
+        <div class="col-sm">
+            <img class="plot" src="images/vswitch.png" />
+        </div>
+    </div>
+
+    <hr>
+
+    <footer>
+        <div class="text-right">
+            <p class="text-muted lead">
+                <a href="http://www.tum.de">Technical&nbsp;University&nbsp;of&nbsp;Munich</a> – <a href="https://www.ei.tum.de/en/lkn/home/">Chair&nbsp;of&nbsp;Communication&nbsp;Networks</a>&nbsp;–&nbsp;2021
+            </p>
+        </div>
+    </footer>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<!-- Icons -->
+<script src="https://kit.fontawesome.com/26c5f68292.js"></script>
+
+</body>
+</html>
